@@ -1,0 +1,36 @@
+name: Deploy to Azure WebApp
+
+on:
+  push:
+    branches:
+      - main   # o la rama que uses para producción
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Descarga el código
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Configura Node/Python/.NET/etc. según tu stack
+      # Ejemplo para Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build --if-present
+
+      # 3. Deploy al App Service con el perfil de publicación
+      - name: 'Deploy to Azure WebApp'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'canarygit'   # el nombre en Azure
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
