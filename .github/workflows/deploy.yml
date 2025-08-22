@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Configura Node/Python/.NET/etc
+      # 2. Configura Node/Python/.NET/etc.
       # Ejemplo para Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
